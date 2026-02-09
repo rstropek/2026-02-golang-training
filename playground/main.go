@@ -84,7 +84,10 @@ func main() {
 	j, _ := json.Marshal(p)
 	fmt.Println(string(j))
 
-	shapes := []Shape{r, c}
+	cc := ColoredCircle{Circle: Circle{Center: Point{X: 0, Y: 0}, Radius: 10}, Color: WHITE}
+	fmt.Printf("Radius: %f, Color: %d, Area: %f\n", cc.Radius, cc.Color, cc.Area())
+
+	shapes := []Shape{r, c, cc}
 	for _, shape := range shapes {
 		fmt.Printf("Area: %f\n", shape.Area())
 	}
