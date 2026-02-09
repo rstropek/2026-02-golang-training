@@ -43,6 +43,19 @@ func (c Circle) Area() float32 {
 	return math.Pi * c.Radius * c.Radius
 }
 
+type Shape interface {
+	Area() float32
+}
+
+type ObjectWithHeight interface {
+	Height() float32
+}
+
+type ShapeWithHeight interface {
+	Shape
+	ObjectWithHeight
+}
+
 func main() {
 	r := Rect{LeftUpper: Point{X: 0, Y: 10}, RightLower: Point{X: 10, Y: 0}}
 	fmt.Printf("Width: %f, Height: %f, Area: %f\n", r.Width(), r.Height(), r.Area())
@@ -54,4 +67,6 @@ func main() {
 	p := Point{X: 1, Y: 2}
 	j, _ := json.Marshal(p)
 	fmt.Println(string(j))
+
+	
 }
