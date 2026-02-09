@@ -30,7 +30,31 @@ func (c *pointerCounter) Increment() int {
 	return c.value
 }
 
+type MyError struct {
+	msg string
+}
+func (e *MyError) Error() string {
+	return e.msg
+}
+
+func typedNilError() error {
+	var err *MyError = nil // in real life, you would get this from e.g. a function call
+
+	// Not very good:
+	//return err
+
+	// Better:
+	if err == nil {
+		return nil
+	}
+	return err
+}
+
 func main() {
+	if err := typedNilError(); err == nil {
+		fmt.Println("error is nil")
+	}
+	
     ng := nameGreeter{name: "Alice"}
 	var ng1 greeter = ng
 	var ng2 greeter = &ng
