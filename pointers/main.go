@@ -50,6 +50,9 @@ func typedNilError() error {
 	return err
 }
 
+// 1. If you create an object in a function, return a concrete type, not an interface.
+// 2. If you accept an object as a parameter, accept an interface, not a concrete type.
+
 func main() {
 	if err := typedNilError(); err == nil {
 		fmt.Println("error is nil")
