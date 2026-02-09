@@ -72,6 +72,14 @@ type ColoredCircle struct {
 	Color int
 }
 
+func (c ColoredCircle) GetColor() int {
+	return c.Color
+}
+
+type Colored interface {
+	GetColor() int
+}
+
 func main() {
 	r := Rect{LeftUpper: Point{X: 0, Y: 10}, RightLower: Point{X: 10, Y: 0}}
 	fmt.Printf("Width: %f, Height: %f, Area: %f\n", r.Width(), r.Height(), r.Area())
@@ -90,5 +98,9 @@ func main() {
 	shapes := []Shape{r, c, cc}
 	for _, shape := range shapes {
 		fmt.Printf("Area: %f\n", shape.Area())
+
+		if colored, ok := shape.(Colored); ok { // Reflection: type assertion
+			fmt.Printf("Color: %d\n", colored.GetColor())
+		}
 	}
 }
