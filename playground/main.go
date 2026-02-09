@@ -56,6 +56,22 @@ type ShapeWithHeight interface {
 	ObjectWithHeight
 }
 
+const (
+	WHITE int = 0xFFFFFF
+	BLACK int = 0x000000
+	RED   int = 0xFF0000
+	GREEN int = 0x00FF00
+	BLUE  int = 0x0000FF
+	YELLOW int = 0xFFFF00
+	MAGENTA int = 0xFF00FF
+	CYAN int = 0x00FFFF
+)
+
+type ColoredCircle struct {
+	Circle
+	Color int
+}
+
 func main() {
 	r := Rect{LeftUpper: Point{X: 0, Y: 10}, RightLower: Point{X: 10, Y: 0}}
 	fmt.Printf("Width: %f, Height: %f, Area: %f\n", r.Width(), r.Height(), r.Area())
@@ -68,5 +84,8 @@ func main() {
 	j, _ := json.Marshal(p)
 	fmt.Println(string(j))
 
-	
+	shapes := []Shape{r, c}
+	for _, shape := range shapes {
+		fmt.Printf("Area: %f\n", shape.Area())
+	}
 }
