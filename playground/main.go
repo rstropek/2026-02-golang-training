@@ -31,6 +31,16 @@ func (c *pointerCounter) Increment() int {
 }
 
 func main() {
+    ng := nameGreeter{name: "Alice"}
+	var ng1 greeter = ng
+	var ng2 greeter = &ng
+	fmt.Printf("ng1: %+v, ng2: %+v\n", ng1, ng2)
+
+	pc := pointerCounter{value: 0}
+	// var pc1 counter = pc
+	var pc2 counter = &pc
+	fmt.Printf("pc2: %+v\n", pc2)
+
 	x := 42
 	px := &x
 
