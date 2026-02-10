@@ -46,11 +46,18 @@ func main() {
 	//}
 
 	// Conditionally consume values
-	time.Sleep(25 * time.Millisecond)
-	select {
-	case value := <-result: // No longer a blocking operation
-		fmt.Println("Value:", value)
-	default:
-		fmt.Println("No value available")
+	for {
+		time.Sleep(100 * time.Millisecond)
+
+		select {
+		case value, ok := <-result: // No longer a blocking operation
+			if !ok {
+				fmt.Println("Channel closed")
+				return
+			}
+			fmt.Println("Value:", value)
+		default:
+			fmt.Println("No value available")
+		}
 	}
 }
