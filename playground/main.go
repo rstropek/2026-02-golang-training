@@ -16,6 +16,12 @@ func div(a, b int) int {
 }
 
 func repl() {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered from panic: ", r)
+		}
+	}()
+	
 	reader := bufio.NewReader(os.Stdin)
 	for {
 		fmt.Print("a: ")
@@ -32,5 +38,7 @@ func repl() {
 }
 
 func main() {
-	repl()
+	for {
+		repl()
+	}
 }
