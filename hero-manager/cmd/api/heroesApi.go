@@ -1,11 +1,14 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/julienschmidt/httprouter"
+	"github.com/rstropek/hero-manager/internal/data"
 )
 
 func (app *application) listHeroesHandler(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +23,25 @@ func (app *application) showHeroHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	fmt.Fprintf(w, "show hero %d", id)
+	// Simulate fetching the hero by ID and return a response.
+	hero := data.Hero{
+		ID:        int64(id),
+		FirstSeen: time.Now(),
+		Name:      "Superman",
+		CanFly:    true,
+		RealName:  "Clark Kent",
+		Abilities: []string{"Flight", "Super Strength", "Heat Vision"},
+		Version:   1,
+	}
+
+	js, err := json.Marshal(hero)
+	if err != nil {
+		http.Error(w, "failed to marshal hero", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
 }
 
 func (app *application) createHeroHandler(w http.ResponseWriter, r *http.Request) {
