@@ -2,3 +2,15 @@
 
 ###
 GET {{server}}/healthcheck
+
+###
+GET {{server}}/heroes
+
+###
+GET {{server}}/heroes/1
+
+###
+POST {{server}}/heroes
+
+###
+DELETE {{server}}/heroes/1
