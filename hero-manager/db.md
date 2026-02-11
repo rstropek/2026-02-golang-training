@@ -21,3 +21,11 @@ exit;
 Connection string: `postgres://postgres:mysecretpassword@localhost/heroes?sslmode=disable`
 
 Tool for migrations: [`migrate`](https://github.com/golang-migrate/migrate)
+
+```bash
+# Create SQL scripts for first migration
+migrate create -seq -ext=.sql -dir=./migrations create_heroes_table
+
+# Create SQL script for second migration
+migrate create -seq -ext=.sql -dir=./migrations heroes_check_constraint
+```
