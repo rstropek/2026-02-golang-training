@@ -28,4 +28,10 @@ migrate create -seq -ext=.sql -dir=./migrations create_heroes_table
 
 # Create SQL script for second migration
 migrate create -seq -ext=.sql -dir=./migrations heroes_check_constraint
+
+# Apply all migrations to the database
+migrate -path ./migrations -database "$POSTGRES_DSN" up
+
+# Remove last migration
+migrate -path ./migrations -database "$POSTGRES_DSN" down
 ```
