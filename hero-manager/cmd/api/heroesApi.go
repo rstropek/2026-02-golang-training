@@ -45,7 +45,36 @@ func (app *application) showHeroHandler(w http.ResponseWriter, r *http.Request) 
 }
 
 func (app *application) createHeroHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "create hero")
+	var input struct {
+		Name      string    `json:"name"`
+		FirstSeen time.Time `json:"firstSeen"`
+		CanFly    bool      `json:"canFly"`
+		RealName  string    `json:"realName,omitempty"`
+		Abilities []string  `json:"abilities"`
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&input)
+	if err != nil {
+		http.Error(w, "invalid JSON input", http.StatusBadRequest)
+		return
+	}
+
+	query := `
+        INSERT INTO heroes (first_seen, name, can_fly, realname, abilities) 
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING id, version`
+	args := []any{input.FirstSeen, input.Name, input.CanFly, input.RealName, input.Abilities}
+	var heroID int64
+	var version int
+	err = app.db.QueryRow(query, args...).Scan(&heroID, &version)
+	if err != nil {
+		http.Error(w, "failed to insert hero into database", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Location", fmt.Sprintf("/heroes/%d", heroID))
+	w.WriteHeader(http.StatusCreated)
+	// Optionally return the created hero in the response body
 }
 
 func (app *application) deleteHeroHandler(w http.ResponseWriter, r *http.Request) {

@@ -11,6 +11,15 @@ GET {{server}}/heroes/1
 
 ###
 POST {{server}}/heroes
+Content-Type: application/json
+
+{
+  "name": "Superman",
+  "firstSeen": "2024-06-01T00:00:00Z",
+  "canFly": true,
+  "realName": "Clark Kent",
+  "abilities": ["Flight", "Super Strength", "Heat Vision"]
+}
 
 ###
 DELETE {{server}}/heroes/1
