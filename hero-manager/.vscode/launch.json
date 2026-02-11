@@ -10,7 +10,10 @@
             "request": "launch",
             "mode": "auto",
             "program": "${workspaceFolder}/cmd/api",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "env": {
+                "POSTGRES_DSN": "postgres://postgres:mysecretpassword@localhost/heroes?sslmode=disable"
+            }
         }
     ]
 }
