@@ -1,0 +1,4 @@
+@server = http://localhost:4000
+
+###
+GET {{server}}/healthcheck
